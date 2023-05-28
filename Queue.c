@@ -11,8 +11,8 @@ Queue *init()
         return NULL;
     }
 
-    queue->front = NULL;
-    queue->rear = NULL;
+    queue->head= NULL;
+    queue->tail = NULL;
     queue->count = 0;
     pthread_mutex_init(&queue->mutex, NULL);
     pthread_cond_init(&queue->cond, NULL);
@@ -26,17 +26,17 @@ void queue_push(Queue *queue, void *data)
     node->data = data;
     node->next = NULL;
     pthread_mutex_lock(&queue->mutex);
-    if (queue->rear == NULL)
+    if (queue->tail == NULL)
     {
-        queue->front = node;
-        queue->rear = node;
+        queue->head= node;
+        queue->tail = node;
     }
     else
     {
-        queue->rear->next = node;
-        queue->rear = node;
+        queue->tail->next = node;
+        queue->tail = node;
     }
-    queue->count++;
+   
     pthread_mutex_unlock(&queue->mutex);
     pthread_cond_signal(&queue->cond);
 }
@@ -44,18 +44,18 @@ void queue_push(Queue *queue, void *data)
 void *queue_pop(Queue *queue)
 {
     pthread_mutex_lock(&queue->mutex);
-    while (queue->front == NULL)
+    while (queue->head== NULL)
     {
         pthread_cond_wait(&queue->cond, &queue->mutex);
     }
     Node *node = queue->front;
     void *data = node->data;
-    queue->front = node->next;
-    if (queue->front == NULL)
+    queue->head= node->next;
+    if (queue->head== NULL)
     {
-        queue->rear = NULL;
+        queue->tail = NULL;
     }
-    queue->count--;
+    
     free(node);
     pthread_mutex_unlock(&queue->mutex);
     return data;

@@ -13,9 +13,9 @@ typedef struct Node
 typedef struct
 {
     // This pointer represents the front of the queue, pointing to the first node
-    Node *front;
+    Node *head;
     // pointing to the last node in the queue.
-    Node *rear;
+    Node *tail;
 
     pthread_mutex_t mutex;
     pthread_cond_t cond;
