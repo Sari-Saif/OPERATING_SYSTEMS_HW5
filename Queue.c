@@ -13,7 +13,7 @@ Queue *init()
 
     queue->front = NULL;
     queue->rear = NULL;
-    queue->count = 0;
+    
     pthread_mutex_init(&queue->mutex, NULL);
     pthread_cond_init(&queue->cond, NULL);
     return queue;
