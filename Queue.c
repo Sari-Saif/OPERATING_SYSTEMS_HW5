@@ -71,3 +71,37 @@ void *queue_pop(Queue *queue)
     pthread_mutex_unlock(&queue->mutex);
     return data;
 }
+/**
+ * lock the mutex to ensure no other threads are accessing the queue during the destruction process.
+ * iterate through the nodes in the queue, freeing the memory allocated for each node's data and the node itself.
+ * Unlock the mutex and destroy it.
+ * destroy the condition variable.
+ * finally, set the head and tail pointers to NULL.
+ */
+
+void queue_destroy(Queue *q)
+{
+    // lock the mutex
+    pthread_mutex_lock(&q->mutex);
+
+    // iterate through the nodes and free the memory
+    Node *current = q->head;
+    while (current != NULL)
+    {
+        Node *next = current->next;
+        free(current->data);
+        free(current);
+        current = next;
+    }
+
+    // Unlock the mutex and destroy it
+    pthread_mutex_unlock(&q->mutex);
+    pthread_mutex_destroy(&q->mutex);
+
+    // Destroy the condition variable
+    pthread_cond_destroy(&q->cond);
+
+    // Set the head and tail pointers to NULL
+    q->head = NULL;
+    q->tail = NULL;
+}
