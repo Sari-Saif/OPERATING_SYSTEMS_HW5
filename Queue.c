@@ -11,9 +11,15 @@ Queue *init()
         return NULL;
     }
 
+<<<<<<< HEAD
     queue->head= NULL;
     queue->tail = NULL;
     queue->count = 0;
+=======
+    queue->front = NULL;
+    queue->rear = NULL;
+    
+>>>>>>> 67fd3e62bf500d9ccd9cadda61ed79c6a6dc282c
     pthread_mutex_init(&queue->mutex, NULL);
     pthread_cond_init(&queue->cond, NULL);
     return queue;
