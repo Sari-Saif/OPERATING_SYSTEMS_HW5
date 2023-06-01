@@ -59,7 +59,7 @@ void *queue_pop(Queue *queue)
     {
         pthread_cond_wait(&queue->cond, &queue->mutex);
     }
-    Node *node = queue->front;
+    Node *node = queue->head;
     void *data = node->data;
     queue->head = node->next;
     if (queue->head == NULL)
@@ -104,4 +104,27 @@ void queue_destroy(Queue *q)
     // Set the head and tail pointers to NULL
     q->head = NULL;
     q->tail = NULL;
+}
+/* checked in online compiler c++ 11 */
+int isPrime(unsigned int n)
+{
+    // if its even the non need to continue
+    if (n % 2 == 0 || n == 1)
+    {
+        return FALSE;
+    }
+
+    unsigned int Sq = pow(n, 0.5);
+    // first odd number
+    unsigned int i = 3;
+    // Check divisibility with odd numbers up to the square root
+    while (i <= Sq)
+    {
+        if (n % i == 0)
+        {
+            return FALSE;
+        }
+        i += 2;
+    }
+    return TRUE;
 }

@@ -3,12 +3,16 @@
 
 #include <pthread.h>
 #include <stdlib.h>
+#include <math.h>
+
+#define FALSE 0
+#define TRUE 1
 
 typedef struct Node
 {
     void *data;
     struct Node *next;
-}Node;
+} Node;
 
 typedef struct
 {
@@ -25,5 +29,6 @@ Queue *init();
 void queue_push(Queue *q, void *data);
 void *queue_pop(Queue *q);
 void queue_destroy(Queue *q);
+int isPrime(unsigned int n);
 
 #endif
