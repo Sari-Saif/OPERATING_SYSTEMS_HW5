@@ -63,7 +63,7 @@ void *queue_pop(Queue *queue)
 
 void queue_destroy(Queue *q)
 {
-    // lock the mutex
+    // lock the mutex - while  i destroy idont to add any new task or somthing else
     pthread_mutex_lock(&q->mutex);
 
     // iterate through the nodes and free the memory
