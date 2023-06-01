@@ -18,12 +18,7 @@ Queue *init()
     pthread_cond_init(&queue->cond, NULL);
     return queue;
 }
-/*
-function adds a node to the tail of the queue.
-It creates a new node, sets its data to the input data, and adds it to the end of the queue.
-If the queue is empty, it sets both the front and rear pointers to the new node.
-signals the condition variable to wake up any threads waiting on the queue.
-*/
+
 void queue_push(Queue *queue, void *data)
 {
 
@@ -45,13 +40,7 @@ void queue_push(Queue *queue, void *data)
     pthread_mutex_unlock(&queue->mutex);
     pthread_cond_signal(&queue->cond);
 }
-/*
-function removes a node from the head of the queue (FIFO). If the queue is empty,
- it waits on the condition variable until there is a node in the queue. Once a node is available,
- it removes it from the head of the queue, decrements the count of nodes in the queue,
- and signals the condition variable to wake up any threads waiting on the queue.
- It then returns the data from the removed node.
-*/
+
 void *queue_pop(Queue *queue)
 {
     pthread_mutex_lock(&queue->mutex);
@@ -71,13 +60,6 @@ void *queue_pop(Queue *queue)
     pthread_mutex_unlock(&queue->mutex);
     return data;
 }
-/**
- * lock the mutex to ensure no other threads are accessing the queue during the destruction process.
- * iterate through the nodes in the queue, freeing the memory allocated for each node's data and the node itself.
- * Unlock the mutex and destroy it.
- * destroy the condition variable.
- * finally, set the head and tail pointers to NULL.
- */
 
 void queue_destroy(Queue *q)
 {
@@ -105,7 +87,7 @@ void queue_destroy(Queue *q)
     q->head = NULL;
     q->tail = NULL;
 }
-/* checked in online compiler c++ 11 */
+
 int isPrime(unsigned int n)
 {
     // if its even the non need to continue
@@ -114,6 +96,7 @@ int isPrime(unsigned int n)
         return FALSE;
     }
 
+    // get the sqrt of input number
     unsigned int Sq = pow(n, 0.5);
     // first odd number
     unsigned int i = 3;

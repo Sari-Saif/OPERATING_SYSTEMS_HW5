@@ -4,6 +4,7 @@
 
 void *run(void *arg)
 {
+    
     AObject *ao = (AObject *)arg;
     void *task = NULL;
 
@@ -44,7 +45,7 @@ AObject *createAObject(int (*func)(void *))
 
 void stopAObject(AObject *activeObject)
 {
-    activeObject->its_on = 0;
+    activeObject->its_on = 0; // isnot work "off"
     pthread_join(activeObject->thread, NULL);
     queue_destroy(activeObject->queue);
     free(activeObject);

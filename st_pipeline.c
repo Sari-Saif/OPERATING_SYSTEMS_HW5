@@ -89,9 +89,32 @@ int opreation4(void *value)
 {
     int *num = (int *)value;
     printf("%d\n", *num);
+
     *num += 2;
     printf("%d\n", *num);
     return 0;
+}
+
+/*
+    for every  node fill it with null
+*/
+void cleanAll()
+{
+    queue_push(get_Queue(ao_0), NULL);
+    queue_push(get_Queue(ao_1), NULL);
+    queue_push(get_Queue(ao_2), NULL);
+    queue_push(get_Queue(ao_3), NULL);
+}
+
+/*
+    stop all operation's(Active object's)
+*/
+void stopAll()
+{
+    stopAObject(ao_0);
+    stopAObject(ao_1);
+    stopAObject(ao_2);
+    stopAObject(ao_3);
 }
 
 int main(int argc, char *argv[])
@@ -100,7 +123,7 @@ int main(int argc, char *argv[])
     int N;
     long seed;
 
-    // the usage format 
+    // the usage format
     if (argc < 2 || argc > 3)
     {
         printf("Usage: pipeline N [seed]\n");
@@ -137,17 +160,10 @@ int main(int argc, char *argv[])
 
         i++;
     }
-
-    queue_push(get_Queue(ao_0), NULL);
-    queue_push(get_Queue(ao_1), NULL);
-    queue_push(get_Queue(ao_2), NULL);
-    queue_push(get_Queue(ao_3), NULL);
-
-    // stop all other objects after its done
-    stopAObject(ao_0);
-    stopAObject(ao_1);
-    stopAObject(ao_2);
-    stopAObject(ao_3);
+    // need to clean
+    cleanAll();
+    // stop all active objects because it's done
+    stopAll();
 
     return 0;
 }
