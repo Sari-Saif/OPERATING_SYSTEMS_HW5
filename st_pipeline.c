@@ -1,3 +1,7 @@
+/***
+ *  tutorial :
+ *  https://www.youtube.com/watch?v=d9s_d28yJq0&list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -96,9 +100,9 @@ int opreation4(void *value)
 }
 
 /*
-    for every  node fill it with null
+    push and operate
 */
-void cleanAll()
+void operateAll()
 {
     queue_push(get_Queue(ao_0), NULL);
     queue_push(get_Queue(ao_1), NULL);
@@ -127,9 +131,9 @@ int main(int argc, char *argv[])
     if (argc < 2 || argc > 3)
     {
         printf("Usage: pipeline N [seed]\n");
-        return 1;
+        return 0;
     }
-
+    // number of mission's
     N = atoi(argv[1]);
     if (argc == 3)
     {
@@ -160,8 +164,8 @@ int main(int argc, char *argv[])
 
         i++;
     }
-    // need to clean
-    cleanAll();
+    // need to clean after it's done
+    operateAll();
     // stop all active objects because it's done
     stopAll();
 
